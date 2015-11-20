@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<panorama id="node1" hideabout="1">
+  <input tile4url="img/photo.top.jpg" prev4url="img/photo._previewtop.jpg" tilescale="1.005236" tile2url="img/photo.back.jpg" prev2url="img/photo._previewback.jpg" tile0url="img/photo.front.jpg" prev0url="img/photo._previewfront.jpg" tile5url="img/photo.bottom.jpg" prev5url="img/photo._previewbottom.jpg" tile3url="img/photo.left.jpg" prev3url="img/photo._previewleft.jpg" tilesize="1910" tile1url="img/photo.right.jpg" prev1url="img/photo._previewright.jpg">
+    <preview color="0x808080"/>
+  </input>
+  <view fovmode="1" pannorth="0">
+    <start fov="133.818" tilt="6" pan="90"/>
+    <min fov="5" tilt="-90" pan="0"/>
+    <max fov="120" tilt="90" pan="360"/>
+  </view>
+  <userdata info="" description="" title="" author="" source="" latitude="" longitude="" datetime="" tags="" copyright="" comment=""/>
+  <hotspots height="20" width="180" wordwrap="1">
+    <label borderalpha="1" backgroundcolor="0xffffff" border="1" height="20" textcolor="0x000000" background="1" borderradius="1" bordercolor="0x000000" enabled="0" backgroundalpha="1" width="180" textalpha="1" wordwrap="1"/>
+    <polystyle borderalpha="1" backgroundcolor="0x0000ff" bordercolor="0x0000ff" backgroundalpha="0.2509803921568627" mode="0"/>
+  </hotspots>
+  <media/>
+  <transition type="crossdissolve" zoomoutpause="1" blendtime="1" zoomout="0" enabled="0" zoomspeed="2" zoomin="0" zoomfov="20" blendcolor="0x000000"/>
+  <control sensitivity="8" simulatemass="1" contextfullscreen="0" speedwheel="1" invertcontrol="1" lockedmouse="0" lockedkeyboard="0" invertwheel="0" lockedwheel="0" hideabout="1" lockedkeyboardzoom="0" dblclickfullscreen="0"/>
+</panorama>
