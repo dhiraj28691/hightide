@@ -298,8 +298,10 @@ var loaded = false;
 function loader() {
 	if( loaded == false ){
 		$('#loader').delay(1000).fadeOut(2000);
-		$('#content').delay(4000).animate({ opacity: 1 }, 800);
+		$('#content').delay(4000).animate({ opacity: 1 }, 1500);
 		$('#godeep').delay(5000).fadeIn(800);
+		$('.wrapper').scrollTo( 8 * $(window).height(), { duration: 0 });
+		$('.wrapper').delay(1000).scrollTo( 0, { duration: 2800 });
 	}
 	loaded = true;
 }
