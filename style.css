@@ -12,11 +12,9 @@
 
 
 body {
-	font-family: "andale_monoregular", Impact, Helvetica, Arial, sans-serif;
-	line-height: 1.5;
-	color: white;
-	letter-spacing: .2em;
 	background: #1C3C75;
+	color: white;
+	font: 13px/1.615 "andale_monoregular", monospace;
 	margin: 0;
 }
 img {
@@ -157,22 +155,15 @@ img#video {
 }
 a.cta {
 	display: none;
-	/*position: fixed;*/
-	/*position: relative;*/
-	/*left:50%;*/
   text-transform: uppercase;
   white-space: nowrap;
   color: #ffffff;
   z-index: 2;
   padding: 1em 2em;
 	border-radius: 3em;
-  -webkit-transition:  background .4s;
-  transition:  background .4s;
-  -webkit-animation: floating 3000ms ease-in-out infinite;
-  animation: floating 3000ms ease-in-out infinite;
 }
 a.cta:hover {
-	background: rgba(255,255,255,.1);
+	text-decoration: line-through;
 }
 a#godeep {
 	margin-top: -26%;
