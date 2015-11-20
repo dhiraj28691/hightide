@@ -232,6 +232,7 @@ hr:last-child {
 
 footer {
 	padding: 1em;
+	pointer-events: none;
 	position: fixed;
 	bottom: 0;
 	right: 0;
@@ -242,6 +243,7 @@ a.instagram {
 	background: url('/img/instagram.svg') center;
 	background-size: contain;
 	display: inline-block;
+	pointer-events: auto;
 	width: 2em;
 	height: 2em;
 	margin: 1em;
@@ -257,6 +259,7 @@ a.buy-now {
 	width: 4em;
 	height: 4em;
 	padding: 1em;
+	pointer-events: auto;
 	display: flex;
 	align-items: center;
 	justify-content: center;
