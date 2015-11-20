@@ -1,6 +1,3 @@
-var images = new Array;
-// var tally;
-
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
 		  window.webkitRequestAnimationFrame ||
@@ -12,8 +9,14 @@ window.requestAnimFrame = (function(){
 		  };
 })();
 
+var images;
+var $wrapper;
+
 
 $(document).ready(function() {
+
+	images = new Array;
+	$wrapper = $('.wrapper');
 
 
 	// $('#loader').fadeIn(1000);
@@ -212,7 +215,7 @@ $(window).load(function() {
 	var scrollTrigger = false;
 
 
-	$('.wrapper').on( 'scroll', function() {
+	$wrapper.on( 'scroll', function() {
 
 		offsetY = -( $('#content').offset().top );
 
@@ -228,11 +231,11 @@ $(window).load(function() {
 			if( scrollTrigger == true ){
 				scrollTrigger = false;
 				console.log( 'scrollTrigger =', scrollTrigger );
-
 				$('#surface').fadeOut(800);
 				$('#godeep').delay(800).fadeIn(800);
 				console.log('<');
 			}
+
 		}
 
 		if ( offsetY >= maxScroll ) {
@@ -251,17 +254,21 @@ $(window).load(function() {
 
 	});
 
+
+
+
+
 	// CTAs script
 
 	$('#godeep').on( 'click', function (event) {
 		event.preventDefault();
-		$('.wrapper').scrollTo( maxScroll + 2 * $(window).height(), { duration: 5000 });
+		$wrapper.scrollTo( maxScroll + 2 * $(window).height(), { duration: 5000 });
 		$('#godeep').fadeOut(800);
 	});
 
 	$('#surface').on( 'click', function (event) {
 		event.preventDefault();
-		$('.wrapper').scrollTo( 0, { duration: 4000 });
+		$wrapper.scrollTo( 0, { duration: 4000 });
 		$('#vr').animate({ opacity: 0 }, 800);
 	});
 
@@ -300,8 +307,8 @@ function loader() {
 		$('#loader').delay(1000).fadeOut(2000);
 		$('#content').delay(4000).animate({ opacity: 1 }, 1500);
 		$('#godeep').delay(5000).fadeIn(800);
-		$('.wrapper').scrollTo( 8 * $(window).height(), { duration: 0 });
-		$('.wrapper').delay(1000).scrollTo( 0, { duration: 2800 });
+		$wrapper.scrollTo( 8 * $(window).height(), { duration: 0 });
+		$wrapper.delay(1000).scrollTo( 0, { duration: 2800 }, initAutoSurface);
 	}
 	loaded = true;
 }
@@ -336,6 +343,33 @@ function preloadImages() {
 	}
 
 }
+
+
+function initAutoSurface() {
+	$wrapper.on('scroll', scrolled );
+}
+
+
+var offScroll;
+
+function scrolled() {
+
+	clearTimeout( offScroll );
+
+	offScroll = setTimeout( function() {
+
+		console.log( 'scrolled' );
+
+    if ( offsetY < maxScroll ) {
+
+			$wrapper.scrollTo( 0, { duration: Math.sqrt(offsetY) * 80 });
+
+		}
+
+	}, 800 );
+}
+
+
 
 
 // ScrollTo plugin
