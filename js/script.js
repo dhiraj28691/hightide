@@ -147,7 +147,7 @@ $(document).ready(function() {
 
 	function loop() {
 
-		if(level < 1.5) {
+		if(level < 1.9) {
 			window.requestAnimFrame(loop, c);
 			tick++;
 			clear();
@@ -186,10 +186,10 @@ $(window).load(function() {
 
 	function animloop( offsetY, step, images ) {
 
-		targetStep = Math.max( Math.round( offsetY / 7.5 ) , 1 );
+		targetStep = Math.max( Math.round( offsetY / 10) , 1 );
 
 		if(targetStep != step ) {
-			step += ( targetStep - step ) / 10;
+			step += ( targetStep - step ) / 20;
 		}
 
 		changeFrame(step, images);
@@ -229,7 +229,6 @@ $(window).load(function() {
 				scrollTrigger = false;
 				console.log( 'scrollTrigger =', scrollTrigger );
 
-				$('#vr').animate({ opacity: 0 }, 2000);
 				$('#surface').fadeOut(800);
 				$('#godeep').delay(800).fadeIn(800);
 				console.log('<');
@@ -241,9 +240,9 @@ $(window).load(function() {
 			if( scrollTrigger == false ){
 				scrollTrigger = true;
 				console.log( 'scrollTrigger =', scrollTrigger );
-				$(this).scrollTo( maxScroll + 2 * $(window).height(), { duration: 800 });
 
-				$('#vr').animate({ opacity: 1 }, 1000);
+				$(this).scrollTo( maxScroll + 2 * $(window).height(), { duration: 800 });
+				$('#vr').animate({ opacity: 1 }, 1500);
 				$('#surface').fadeIn(800);
 				$('#godeep').fadeOut(800);
 				console.log('>=');
@@ -263,6 +262,7 @@ $(window).load(function() {
 	$('#surface').on( 'click', function (event) {
 		event.preventDefault();
 		$('.wrapper').scrollTo( 0, { duration: 4000 });
+		$('#vr').animate({ opacity: 0 }, 800);
 	});
 
 
@@ -297,7 +297,7 @@ var loaded = false;
 
 function loader() {
 	if( loaded == false ){
-		$('#loader').delay(2000).fadeOut(2000);
+		$('#loader').delay(1000).fadeOut(2000);
 		$('#content').delay(4000).animate({ opacity: 1 }, 800);
 		$('#godeep').delay(5000).fadeIn(800);
 	}
