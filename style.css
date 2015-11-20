@@ -235,13 +235,25 @@ footer {
 	position: fixed;
 	bottom: 0;
 	right: 0;
+	display: flex;
+	align-items: center;
 }
+a.instagram {
+	background: url('/img/instagram.svg') center;
+	background-size: contain;
+	display: inline-block;
+	width: 2em;
+	height: 2em;
+	margin: 1em;
+}
+
 a.buy-now {
 	background: url('/img/badge-background.svg') center;
 	background-size: contain;
 	color: inherit;
 	text-align: center;
 	text-transform: uppercase;
+	margin: 1em;
 	width: 4em;
 	height: 4em;
 	padding: 1em;
