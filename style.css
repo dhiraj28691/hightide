@@ -10,11 +10,10 @@
 }
 
 
-
 body {
 	background: #1C3C75;
 	color: white;
-	font: 13px/1.615 "andale_monoregular", monospace;
+	font: 13px/1.3 "andale_monoregular", monospace;
 	margin: 0;
 }
 img {
@@ -250,8 +249,8 @@ a.instagram {
 }
 
 a.buy-now {
-	background: url('/img/badge-background.svg') center;
-	background-size: contain;
+/*	background: url('/img/badge-background.svg') center;
+	background-size: contain;*/
 	color: inherit;
 	text-align: center;
 	text-transform: uppercase;
