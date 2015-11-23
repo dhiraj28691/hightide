@@ -11,6 +11,10 @@ window.requestAnimFrame = (function(){
 
 var images;
 var $wrapper;
+var offsetY;
+var maxScroll;
+var offScroll;
+
 
 
 $(document).ready(function() {
@@ -208,9 +212,7 @@ $(window).load(function() {
 		}
 	}
 
-  var maxScroll = $('#content').height() - $(window).height();
-
-  var offsetY;
+  maxScroll = $('#content').height() - $(window).height();
 
 	var scrollTrigger = false;
 
@@ -349,8 +351,6 @@ function initAutoSurface() {
 	$wrapper.on('scroll', scrolled );
 }
 
-
-var offScroll;
 
 function scrolled() {
 

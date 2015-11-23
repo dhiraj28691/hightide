@@ -230,22 +230,25 @@ hr:last-child {
 }
 
 footer {
-	padding: 1em;
+	width: calc(100% - 3em);
+	padding: 1em 1.5em;
 	pointer-events: none;
 	position: fixed;
 	bottom: 0;
-	right: 0;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
 }
+footer a {
+	width: 2em;
+	height: 2em;
+	margin: 2em;
+}
 a.instagram {
-	background: url('/img/instagram.svg') center;
+	background: url('/img/instagram.svg') center no-repeat;
 	background-size: contain;
 	display: inline-block;
 	pointer-events: auto;
-	width: 2em;
-	height: 2em;
-	margin: 1em;
 }
 
 a.buy-now {
@@ -254,10 +257,6 @@ a.buy-now {
 	color: inherit;
 	text-align: center;
 	text-transform: uppercase;
-	margin: 1em;
-	width: 4em;
-	height: 4em;
-	padding: 1em;
 	pointer-events: auto;
 	display: flex;
 	align-items: center;
