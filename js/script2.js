@@ -16,7 +16,7 @@ var maxScroll;
 var offScroll;
 var winRatio;
 
-var a, q, x, y, w, h;
+var a, ar, q, x, y, w, h;
 
 
 
@@ -26,7 +26,6 @@ $(document).ready(function() {
 	$wrapper = $('.wrapper');
 
 
-	// $('#loader').fadeIn(1000);
 	$('#loader .container').fadeIn(1000);
 
 	preloadImages();
@@ -177,8 +176,8 @@ $(document).ready(function() {
 
 	};
 
-	// loop( loader );
-	loader();
+	loop( loader );
+	// loader();
 
 });
 
@@ -215,18 +214,31 @@ $(window).load(function() {
 		}
 	}
 
-  // maxScroll = $('#content').height() - $(window).height();
-  maxScroll = $(window).height() * 10;
+	winRatio = window.innerWidth / window.innerHeight;
+
+
+	var $images = $('#content img');
+
+	maxScroll = window.innerHeight * ( $images.length - 1 );
+
+	$('#fakeContent').css( 'height', maxScroll + window.innerHeight );
+
+	var images_args = [];
+
+	$images.each( function(idx, el) {
+
+		images_args[idx] = {
+			"a": Math.random() * 10 - 5,
+			"q": Math.random() * 2 - 1,
+			"w": $(this).width(),
+			"h": $(this).height()
+		};
+
+	});
+
+
 
 	var scrollTrigger = false;
-
-	winRatio = $(window).width() / $(window).height();
-
-	$('#fakeContent').css( 'height', $(window).height() * 10 );
-
-
-
-
 
 
 
@@ -238,8 +250,8 @@ $(window).load(function() {
 			animloop( offsetY, step, images );
 		});
 
-		// console.log( 'maxScroll =', maxScroll );
-		// console.log( 'offsetY =', offsetY );
+		console.log( 'maxScroll =', maxScroll );
+		console.log( 'offsetY =', offsetY );
 
 		if ( offsetY < maxScroll ) {
 
@@ -259,7 +271,7 @@ $(window).load(function() {
 				scrollTrigger = true;
 				console.log( 'scrollTrigger =', scrollTrigger );
 
-				$(this).scrollTo( maxScroll + 2 * $(window).height(), { duration: 800 });
+				$(this).scrollTo( maxScroll + 2 * window.innerHeight, { duration: 800 });
 				$('#vr').animate({ opacity: 1 }, 1500);
 				$('#surface').fadeIn(800);
 				$('#godeep').fadeOut(800);
@@ -272,67 +284,53 @@ $(window).load(function() {
 
 		$images.each( function(idx, el) {
 
-			a = images_positions[idx].a;
-			q = images_positions[idx].q;
-			w = images_positions[idx].w;
-			h = images_positions[idx].h;
+			a = images_args[idx].a;
+			q = images_args[idx].q;
+			w = images_args[idx].w;
+			h = images_args[idx].h;
 
+
+			ar = a * winRatio;
 
 			if ( q > 0 ) {
-				y = ( offsetY ) % window.innerHeight - window.innerHeight / 2 - h / 2;
+				y = ( offsetY ) % window.innerHeight - window.innerHeight / 2;
+				rotate = ( Math.atan( ar, q ) * 180 / Math.PI + 180) % 360 * -1;
 			} else {
-				y = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2 - h / 2;
+				y = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2;
+				rotate = ( Math.atan( ar, q ) * 180 / Math.PI + 360) % 360 * -1;
 			}
 
-			x = y * a - w / 2;
+			x = ar * y;
 
 
-			// if ( q > 0 ) {
-   //      yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2;
-   //    } else {
-   //      yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2;
-   //    }
-
-   //    xt = ( y ) * a;
-
-   //    y = yt - h / 2;
-
-   //    x = xt - w / 2;
-
-
-			// n = idx + 1;
-
-			// rotate = ( Math.atan( a, q ) * 180 / Math.PI + 360) % 360;
-			rotate = 0;
 			var styles = {
-				'-webkit-transform': 'translateX('+ x + 'px) translateY('+ y + 'px) rotate('+ rotate +'deg)',
-				'transform': 'translateX('+ x + 'px) translateY('+ y + 'px) rotate('+ rotate +'deg)'
+				'-webkit-transform': 'translateX('+ ( x - w / 2 ) + 'px) translateY('+ ( y - h / 2 ) + 'px) rotate('+ rotate +'deg)',
+				'transform': 'translateX('+ ( x - w / 2 ) + 'px) translateY('+ ( y - h / 2 ) + 'px) rotate('+ rotate +'deg)',
+				'display' : 'block'
 			};
-			$(el).css(styles);
 
-	    console.log( 'a =', a );
-	    console.log( 'q =', q );
-	    console.log( 'Math.atan( x, y ) =', Math.atan( x, y ) );
-	    console.log( 'rotate =', rotate );
+			n = offsetY / window.innerHeight + 1;
+
+			// console.log( 'n =', n );
+
+
+			if ( n > idx && n < idx + 1 ) {
+
+				$(el).css(styles);
+
+	    } else {
+
+	    	$(el).css( 'display', 'none' );
+	    }
+
+
 
 		});
 
 	});
 
 
-	var $images = $('#content img');
-	var images_positions = [];
 
-	$images.each( function(idx, el) {
-
-		images_positions[idx] = {
-			"a": ( Math.random() * 2 - 1 ),
-			"q": ( Math.random() * 2 - 1 ),
-			"w": $(this).width(),
-			"h": $(this).height()
-		};
-
-	});
 
 
 
@@ -341,7 +339,7 @@ $(window).load(function() {
 
 	$('#godeep').on( 'click', function (event) {
 		event.preventDefault();
-		$wrapper.scrollTo( maxScroll + 2 * $(window).height(), { duration: 5000 });
+		$wrapper.scrollTo( maxScroll + 2 * window.innerHeight, { duration: 5000 });
 		$('#godeep').fadeOut(800);
 	});
 
@@ -350,7 +348,6 @@ $(window).load(function() {
 		$wrapper.scrollTo( 0, { duration: 4000 });
 		$('#vr').animate({ opacity: 0 }, 800);
 	});
-
 
 
 });
@@ -364,7 +361,7 @@ function loader() {
 		$('#loader').delay(1000).fadeOut(2000);
 		$('#content').delay(4000).animate({ opacity: 1 }, 1500);
 		$('#godeep').delay(5000).fadeIn(800);
-		// $wrapper.scrollTo( 8 * $(window).height(), { duration: 0 });
+		$wrapper.scrollTo( 8 * window.innerHeight, { duration: 0 });
 		// $wrapper.delay(1000).scrollTo( 0, { duration: 2800 }, initAutoSurface);
 	}
 	loaded = true;
@@ -377,7 +374,6 @@ function pad(number, length) {
 
 function preloadImages() {
 	var source;
-	// tally = 180;
 
 	for (var i = 1; i <= 180; i++) {
 		source = "frames/waves"+( pad(i, 3) )+".jpg";
@@ -390,7 +386,6 @@ function preloadImages() {
 	}
 
 }
-
 
 function initAutoSurface() {
 	$wrapper.on('scroll', scrolled );

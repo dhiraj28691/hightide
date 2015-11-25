@@ -117,24 +117,14 @@ img#video {
 	height:100%;
 }
 #tees img {
+	display: none;
 	position: absolute;
 	max-width: 50%;
-	display: block;
 	left: 50%;
 	top: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	-mos-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);
-	/*margin: 38vh auto;*/
 }
-/*#content img:first-child {
-	margin: 30vh auto 38vh;
-}*/
-/*@media (min-width: 768px) {
-	#content img:first-child {
-		margin: 38vh auto;
-	}
-}*/
+
+
 @-webkit-keyframes floating {
 	0% { -webkit-transform: translateY(0%); }
 	50% { -webkit-transform: translateY(-30%); }
