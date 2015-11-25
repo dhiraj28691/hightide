@@ -1,6 +1,3 @@
-var images = new Array;
-// var tally;
-
 window.requestAnimFrame = (function(){
   return  window.requestAnimationFrame       ||
 		  window.webkitRequestAnimationFrame ||
@@ -12,8 +9,21 @@ window.requestAnimFrame = (function(){
 		  };
 })();
 
+var images;
+var $wrapper;
+var offsetY;
+var maxScroll;
+var offScroll;
+var winRatio;
+
+var a, q, x, y, w, h;
+
+
 
 $(document).ready(function() {
+
+	images = new Array;
+	$wrapper = $('.wrapper');
 
 
 	// $('#loader').fadeIn(1000);
@@ -108,7 +118,7 @@ $(document).ready(function() {
 		while(i--){
 			points[i].update();
 		}
-	  	var i = opt.count + 2;
+	  var i = opt.count + 2;
 		var spacing = (cw + (opt.range.x * 2)) / (opt.count-1);
 		while(i--){
 		  points.push(new Point({
@@ -147,7 +157,7 @@ $(document).ready(function() {
 
 	function loop() {
 
-		if(level < 1.5) {
+		if(level < 1.9) {
 			window.requestAnimFrame(loop, c);
 			tick++;
 			clear();
@@ -158,7 +168,7 @@ $(document).ready(function() {
 
 			// console.log('tally', tally);
 
-			level = level + .002;
+			level = level + .004;
 		}
 
 		if(level >= 1) {
@@ -167,8 +177,8 @@ $(document).ready(function() {
 
 	};
 
-	loop( loader );
-	// loader();
+	// loop( loader );
+	loader();
 
 });
 
@@ -186,10 +196,10 @@ $(window).load(function() {
 
 	function animloop( offsetY, step, images ) {
 
-		targetStep = Math.max( Math.round( offsetY / 7.5 ) , 1 );
+		targetStep = Math.max( Math.round( offsetY / 10) , 1 );
 
 		if(targetStep != step ) {
-			step += ( targetStep - step ) / 10;
+			step += ( targetStep - step ) / 20;
 		}
 
 		changeFrame(step, images);
@@ -205,14 +215,22 @@ $(window).load(function() {
 		}
 	}
 
-  var maxScroll = $('#content').height() - $(window).height();
-
-  var offsetY;
+  // maxScroll = $('#content').height() - $(window).height();
+  maxScroll = $(window).height() * 10;
 
 	var scrollTrigger = false;
 
+	winRatio = $(window).width() / $(window).height();
 
-	$('.wrapper').on( 'scroll', function() {
+	$('#fakeContent').css( 'height', $(window).height() * 10 );
+
+
+
+
+
+
+
+	$wrapper.on( 'scroll', function() {
 
 		offsetY = -( $('#content').offset().top );
 
@@ -220,69 +238,127 @@ $(window).load(function() {
 			animloop( offsetY, step, images );
 		});
 
+		// console.log( 'maxScroll =', maxScroll );
+		// console.log( 'offsetY =', offsetY );
+
 		if ( offsetY < maxScroll ) {
 
-				if( scrollTrigger == true ){
-					scrollTrigger = false;
-					console.log( 'scrollTrigger =', scrollTrigger );
+			if( scrollTrigger == true ){
+				scrollTrigger = false;
+				console.log( 'scrollTrigger =', scrollTrigger );
+				$('#surface').fadeOut(800);
+				$('#godeep').delay(800).fadeIn(800);
+				console.log('<');
+			}
 
-					$('#vr').animate({ opacity: 0 }, 2000);
-					$('#surface').fadeOut(800);
-					$('#godeep').fadeIn(800);
-					console.log('<');
-				}
 		}
 
 		if ( offsetY >= maxScroll ) {
 
-				if( scrollTrigger == false ){
-					scrollTrigger = true;
-					console.log( 'scrollTrigger =', scrollTrigger );
-					$(this).scrollTo( maxScroll + $(window).height(), { duration: 500 });
+			if( scrollTrigger == false ){
+				scrollTrigger = true;
+				console.log( 'scrollTrigger =', scrollTrigger );
 
-					$('#vr').animate({ opacity: 1 }, 1000);
-					$('#surface').fadeIn(800);
-					$('#godeep').fadeOut(800);
-					console.log('>=');
-				}
+				$(this).scrollTo( maxScroll + 2 * $(window).height(), { duration: 800 });
+				$('#vr').animate({ opacity: 1 }, 1500);
+				$('#surface').fadeIn(800);
+				$('#godeep').fadeOut(800);
+				console.log('>=');
+			}
 		}
 
+
+		// tees scrolling animation
+
+		$images.each( function(idx, el) {
+
+			a = images_positions[idx].a;
+			q = images_positions[idx].q;
+			w = images_positions[idx].w;
+			h = images_positions[idx].h;
+
+
+			// if ( q > 0 ) {
+			// 	y = ( offsetY ) % window.innerHeight;
+			// } else {
+			// 	y = ( offsetY ) % window.innerHeight * -1 + window.innerHeight;
+			// }
+
+			// x = Math.abs( y ) * winRatio * a + window.innerWidth / 2 - window.innerWidth / 2 * a;
+
+			// if ( q > 0 ) {
+			// 	yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2 - h / 2;
+			// } else {
+			// 	yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2 - h / 2;
+			// }
+
+			// xt = ( yt + h / 2 ) * a - w / 2;
+
+
+			if ( q > 0 ) {
+        yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2;
+      } else {
+        yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2;
+      }
+
+      xt = ( y ) * a;
+
+      y = yt + h / 2;
+
+      x = xt + w / 2;
+
+
+			// n = idx + 1;
+
+			// rotate = ( Math.atan( a, q ) * 180 / Math.PI + 360) % 360;
+			rotate = 0;
+			var styles = {
+				'-webkit-transform': 'translateX('+ x + 'px) translateY('+ y + 'px) rotate('+ rotate +'deg)',
+				'transform': 'translateX('+ x + 'px) translateY('+ y + 'px) rotate('+ rotate +'deg)'
+			};
+			$(el).css(styles);
+
+	    console.log( 'a =', a );
+	    console.log( 'q =', q );
+	    console.log( 'Math.atan( x, y ) =', Math.atan( x, y ) );
+	    console.log( 'rotate =', rotate );
+
+		});
+
 	});
+
+
+	var $images = $('#content img');
+	var images_positions = [];
+
+	$images.each( function(idx, el) {
+
+		images_positions[idx] = {
+			"a": ( Math.random() * 2 - 1 ),
+			"q": ( Math.random() * 2 - 1 ),
+			"w": $(this).width(),
+			"h": $(this).height()
+		};
+
+	});
+
+
+
 
 	// CTAs script
 
 	$('#godeep').on( 'click', function (event) {
 		event.preventDefault();
-		$('.wrapper').scrollTo( maxScroll + $(window).height(), { duration: 5000 });
+		$wrapper.scrollTo( maxScroll + 2 * $(window).height(), { duration: 5000 });
+		$('#godeep').fadeOut(800);
 	});
 
 	$('#surface').on( 'click', function (event) {
 		event.preventDefault();
-		$('.wrapper').scrollTo( 0, { duration: 4000 });
+		$wrapper.scrollTo( 0, { duration: 4000 });
+		$('#vr').animate({ opacity: 0 }, 800);
 	});
 
-
-	// tees transform animation
-
-	var n,
-			transform,
-			rotate;
-
-	var $images = $('#content img');
-
-
-	$images.each( function(idx, el) {
-
-
-		n = idx + 1;
-
-		transform = Math.sin( n ) * Math.log( n ) * 21;
-		rotate = Math.cos( n ) * Math.log( n ) * -6 - 1;
-
-		$(el).css( '-webkit-transform', 'rotate('+rotate+'deg) translateX('+transform+'%)' );
-		$(el).css( 'transform', 'rotate('+rotate+'deg) translateX('+transform+'%)' );
-
-	});
 
 
 });
@@ -293,9 +369,11 @@ var loaded = false;
 
 function loader() {
 	if( loaded == false ){
-		$('#loader').delay(2000).fadeOut(2000);
-		$('#content').delay(4000).animate({ opacity: 1 }, 800);
+		$('#loader').delay(1000).fadeOut(2000);
+		$('#content').delay(4000).animate({ opacity: 1 }, 1500);
 		$('#godeep').delay(5000).fadeIn(800);
+		// $wrapper.scrollTo( 8 * $(window).height(), { duration: 0 });
+		// $wrapper.delay(1000).scrollTo( 0, { duration: 2800 }, initAutoSurface);
 	}
 	loaded = true;
 }
@@ -316,20 +394,35 @@ function preloadImages() {
 			'src': source
 		});
 
-		// $img.on('load', function(){
-
-		// 	tally--;
-
-		// 	if(tally == 0) {
-		// 		callback.call();
-		// 	}
-
-		// });
-
 		images[i] = { "src": source };
 	}
 
 }
+
+
+function initAutoSurface() {
+	$wrapper.on('scroll', scrolled );
+}
+
+
+function scrolled() {
+
+	clearTimeout( offScroll );
+
+	offScroll = setTimeout( function() {
+
+		console.log( 'scrolled' );
+
+    if ( offsetY < maxScroll ) {
+
+			$wrapper.scrollTo( 0, { duration: Math.sqrt(offsetY) * 80 });
+
+		}
+
+	}, 800 );
+}
+
+
 
 
 // ScrollTo plugin

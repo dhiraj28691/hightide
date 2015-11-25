@@ -198,7 +198,6 @@ a#surface:before {
 	content: url('img/ar-up.svg');
 }
 
-
 iframe#vr {
 	position: fixed;
 	top: 0;
@@ -262,7 +261,9 @@ a.buy-now {
 	align-items: center;
 	justify-content: center;
 }
-
+a.instagram:hover {
+	background-size: 90%;
+}
 a.buy-now:hover {
 	text-decoration: line-through;
 }

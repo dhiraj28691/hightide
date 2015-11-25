@@ -1,12 +1,19 @@
+@font-face {
+	font-family: 'andale_monoregular';
+  src: url('/fonts/andale_mono/andale_mono-webfont.eot');
+  src: url('/fonts/andale_mono/andale_mono-webfont.eot?#iefix') format('embedded-opentype'),
+       url('/fonts/andale_mono/andale_mono-webfont.woff') format('woff'),
+       url('/fonts/andale_mono/andale_mono-webfont.ttf') format('truetype'),
+       url('/fonts/andale_mono/andale_mono-webfont.svg#andale_monoregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
 body {
-	font-family: Helvetica, Arial, sans-serif;
-	font-size:16px;
-	font-weight: bold;
-	line-height:150%;
-	color:#1C3C75;
-	/*text-align: center;*/
-	letter-spacing: .2em;
-	background: #ffffff;
+	background: #1C3C75;
+	color: white;
+	font: 13px/1.3 "andale_monoregular", monospace;
 	margin: 0;
 }
 img {
@@ -19,6 +26,7 @@ iframe {
 	border: 0;
 }
 a {
+	display: inline-block;
 	text-decoration: none;
 }
 
@@ -52,39 +60,32 @@ canvas {
 	height:100%;
 	z-index:2
 }
-/*#loader .container svg {
-	path: #034268;
-}*/
-/*@media screen and (min-width: 1024px) {
-	#loader .container {
-		width:520px;
-		height:320px;
-	}
-}*/
-
 .wrapper {
-	/*opacity: 0;*/
-	top: 0;
+/*	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;*/
 	width: 100%;
 	height: 100%;
+	text-align: center;
 	overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
 }
 img#video {
-	/*display: none;*/
-	position:fixed;
-	left:50%;
-	top:50%;
+	pointer-events: none;
+	position: fixed;
+	left: 50%;
+	top: 50%;
 	-webkit-transform: translate(-50%, -50%);
 	-mos-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
-	z-index:1;
 	min-width: 100%;
-    min-height: 100%;
+  min-height: 100%;
 }
 #overlay {
+	pointer-events: none;
 	position:fixed;
-	z-index:2;
 	top:0;
 	right:0;
 	bottom:0;
@@ -94,95 +95,135 @@ img#video {
 	background:url('img/grid_overlay61.png');
 }
 #content {
-	/*display: none;*/
-	position:relative;
+	position: relative;
 	width: 100%;
 	overflow: hidden;
-	z-index:2;
-	margin: 0 0 100vh;
+	margin: 0 0 150vh;
 	opacity: 0;
 }
-
-
-#content img {
+#fakeContent {
+	position: relative;
+	width: 100%;
+	overflow: hidden;
+}
+#tees {
+	pointer-events: none;
+	position:fixed;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	width:100%;
+	height:100%;
+}
+#tees img {
+	position: absolute;
 	max-width: 50%;
 	display: block;
-	margin: 38vh auto;
+	left: 50%;
+	top: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-mos-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+	/*margin: 38vh auto;*/
 }
-#content img:first-child {
+/*#content img:first-child {
 	margin: 30vh auto 38vh;
-}
-@media (min-width: 768px) {
+}*/
+/*@media (min-width: 768px) {
 	#content img:first-child {
 		margin: 38vh auto;
 	}
-}
+}*/
 @-webkit-keyframes floating {
-	0% { -webkit-transform: translateY(0) translate(-50%, -50%); }
-	50% { -webkit-transform: translateY(30%) translate(-50%, -50%); }
-	100% { -webkit-transform: translateY(0) translate(-50%, -50%); }
+	0% { -webkit-transform: translateY(0%); }
+	50% { -webkit-transform: translateY(-30%); }
+	100% { -webkit-transform: translateY(0%); }
+}
+@-moz-keyframes floating {
+	0% { -moz-transform: translateY(0%); }
+	50% { -moz-transform: translateY(-30%); }
+	100% { -moz-transform: translateY(0%); }
+}
+@-o-keyframes floating {
+	0% { -o-transform: translateY(0%); }
+	50% { -o-transform: translateY(-30%); }
+	100% { -o-transform: translateY(0%); }
 }
 @keyframes floating {
-	0% { transform: translateY(0) translate(-50%, -50%); }
-	50% { transform: translateY(30%) translate(-50%, -50%); }
-	100% { transform: translateY(0) translate(-50%, -50%); }
+	0% { transform: translateY(0%); }
+	50% { transform: translateY(-30%); }
+	100% { transform: translateY(0%); }
+}
+.ctas {
+	position: fixed;
+	width: 100%;
+	height: 0;
+	z-index: 5;
+	/*margin: 5% 0;*/
+}
+.ctas.up {
+	top: 0;
+}
+.ctas.down {
+	bottom: 0;
 }
 a.cta {
 	display: none;
-	position: fixed;
-	left:50%;
-/*	-webkit-transform: translate(-50%, -50%);
-	-mos-transform: translate(-50%, -50%);
-	transform: translate(-50%, -50%);*/
-  text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
   color: #ffffff;
   z-index: 2;
-  border-radius: 3em;
-  -webkit-transition:  background .4s;
-  transition:  background .4s;
-  -webkit-animation: floating 3000ms ease-in-out infinite;
-  animation: floating 3000ms ease-in-out infinite;
+  padding: 1em 2em;
+	border-radius: 3em;
 }
 a.cta:hover {
-	background: rgba(255,255,255,.1);
+	text-decoration: line-through;
 }
 a#godeep {
-	bottom:5%;
-	padding: 1em 2em 0;
+	margin-top: -26%;
+	padding-top: 1.5em;
 }
 a#surface {
-	top:5%;
-  padding: 0 2em 1em;
+	margin-top: 3%;
+	padding-bottom: 1.5em;
+}
+@media (min-width: 768px) {
+	a#godeep {
+		margin-top: -10%;
+		padding-top: 1.5em;
+	}
+	a#surface {
+		margin-top: 4%;
+		padding-bottom: 1.5em;
+	}
 }
 a#godeep:after,
 a#surface:before {
 	display: block;
-	padding: .5em;
 	-webkit-transition:  all .4s;
   transition:  all .4s;
 }
 a#godeep:hover:after,
 a#surface:hover:before {
-	margin: .5em;
+	margin: .5em 0;
 }
 a#godeep:after {
+	padding-top: .5em;
 	content: url('img/ar-down.svg');
 }
 a#surface:before {
+	padding-bottom: .5em;
 	content: url('img/ar-up.svg');
 }
 
-
 iframe#vr {
-    position: fixed;
-    top: 0;
-    left: 0;
-		width: 100%;
-    height: 100%;
-    opacity:0;
-    z-index: 2;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity:0;
 }
 
 hr {
@@ -206,3 +247,42 @@ hr:last-child {
 	transform: translate(-50%, -50%) rotate(90deg);
 }
 
+footer {
+	width: calc(100% - 3em);
+	padding: 1em 1.5em;
+	pointer-events: none;
+	position: fixed;
+	bottom: 0;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+footer a {
+	width: 2em;
+	height: 2em;
+	margin: 2em;
+}
+a.instagram {
+	background: url('/img/instagram.svg') center no-repeat;
+	background-size: contain;
+	display: inline-block;
+	pointer-events: auto;
+}
+
+a.buy-now {
+/*	background: url('/img/badge-background.svg') center;
+	background-size: contain;*/
+	color: inherit;
+	text-align: center;
+	text-transform: uppercase;
+	pointer-events: auto;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+a.instagram:hover {
+	background-size: 90%;
+}
+a.buy-now:hover {
+	text-decoration: line-through;
+}

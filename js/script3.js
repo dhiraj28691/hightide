@@ -106,7 +106,7 @@ $(window).load(function() {
 
 
 	// tees scrolling animation
-1
+
 
 	var rotate = Math.sin(( contScroll.top + 218 ) / 800) * 20;
 	var left = ( Math.cos(( contScroll.top ) / 800) * 10 ) - 15;
