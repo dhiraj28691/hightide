@@ -278,34 +278,34 @@ $(window).load(function() {
 			h = images_positions[idx].h;
 
 
-			// if ( q > 0 ) {
-			// 	y = ( offsetY ) % window.innerHeight;
-			// } else {
-			// 	y = ( offsetY ) % window.innerHeight * -1 + window.innerHeight;
-			// }
+			if ( q > 0 ) {
+				y = ( offsetY ) % window.innerHeight;
+			} else {
+				y = ( offsetY ) % window.innerHeight * -1 + window.innerHeight;
+			}
 
-			// x = Math.abs( y ) * winRatio * a + window.innerWidth / 2 - window.innerWidth / 2 * a;
-
-			// if ( q > 0 ) {
-			// 	yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2 - h / 2;
-			// } else {
-			// 	yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2 - h / 2;
-			// }
-
-			// xt = ( yt + h / 2 ) * a - w / 2;
-
+			x = Math.abs( y ) * winRatio * a + window.innerWidth / 2 - window.innerWidth / 2 * a;
 
 			if ( q > 0 ) {
-        yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2;
-      } else {
-        yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2;
-      }
+				yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2 - h / 2;
+			} else {
+				yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2 - h / 2;
+			}
 
-      xt = ( y ) * a;
+			xt = ( yt + h / 2 ) * a - w / 2;
 
-      y = yt + h / 2;
 
-      x = xt + w / 2;
+			// if ( q > 0 ) {
+   //      yt = ( offsetY ) % window.innerHeight - window.innerHeight / 2;
+   //    } else {
+   //      yt = ( offsetY ) % window.innerHeight * -1 + window.innerHeight / 2;
+   //    }
+
+   //    xt = ( y ) * a;
+
+   //    y = yt - h / 2;
+
+   //    x = xt - w / 2;
 
 
 			// n = idx + 1;
