@@ -10,7 +10,8 @@ window.requestAnimFrame = (function(){
 })();
 
 var images;
-var $wrapper;
+var $window;
+var $body;
 var offsetY;
 var maxScroll;
 var offScroll;
@@ -20,10 +21,10 @@ var offScroll;
 $(document).ready(function() {
 
 	images = new Array;
-	$wrapper = $('.wrapper');
+	$window = $( window );
+	$body = $( 'body' );
 
 
-	// $('#loader').fadeIn(1000);
 	$('#loader .container').fadeIn(1000);
 
 	preloadImages();
@@ -105,7 +106,6 @@ $(document).ready(function() {
 	Point.prototype.render = function(){
 	  ctx.beginPath();
 	  ctx.arc(this.x, this.y, 3, 0, Math.PI * 2, false);
-	  // ctx.fillStyle = '#034268';
 	  ctx.fill();
 	};
 
@@ -160,11 +160,6 @@ $(document).ready(function() {
 			clear();
 			updatePoints();
 			renderShape();
-
-			// console.log(level);
-
-			// console.log('tally', tally);
-
 			level = level + .004;
 		}
 
@@ -212,14 +207,15 @@ $(window).load(function() {
 		}
 	}
 
-  maxScroll = $('#content').height() - $(window).height();
+  maxScroll = $body.height() - 2 * window.innerHeight;
 
 	var scrollTrigger = false;
 
 
-	$wrapper.on( 'scroll', function() {
+	$window.on( 'scroll', function() {
 
-		offsetY = -( $('#content').offset().top );
+
+		offsetY = window.scrollY;
 
 		requestAnimFrame(function(){
 			animloop( offsetY, step, images );
@@ -227,6 +223,8 @@ $(window).load(function() {
 
 		console.log( 'maxScroll =', maxScroll );
 		console.log( 'offsetY =', offsetY );
+		console.log( '$body.height() =', $body.height() );
+		console.log( 'window.innerHeight =', window.innerHeight );
 
 		if ( offsetY < maxScroll ) {
 
@@ -246,7 +244,7 @@ $(window).load(function() {
 				scrollTrigger = true;
 				console.log( 'scrollTrigger =', scrollTrigger );
 
-				$(this).scrollTo( maxScroll + 2 * $(window).height(), { duration: 800 });
+				$body.scrollTo( maxScroll + 2 * window.innerHeight, { duration: 800 });
 				$('#vr').animate({ opacity: 1 }, 1500);
 				$('#surface').fadeIn(800);
 				$('#godeep').fadeOut(800);
@@ -257,20 +255,17 @@ $(window).load(function() {
 	});
 
 
-
-
-
 	// CTAs script
 
 	$('#godeep').on( 'click', function (event) {
 		event.preventDefault();
-		$wrapper.scrollTo( maxScroll + 2 * $(window).height(), { duration: 5000 });
+		$body.scrollTo( maxScroll + 2 * window.innerHeight, { duration: 5000 });
 		$('#godeep').fadeOut(800);
 	});
 
 	$('#surface').on( 'click', function (event) {
 		event.preventDefault();
-		$wrapper.scrollTo( 0, { duration: 4000 });
+		$body.scrollTo( 0, { duration: 4000 });
 		$('#vr').animate({ opacity: 0 }, 800);
 	});
 
@@ -283,12 +278,9 @@ $(window).load(function() {
 
 	var $images = $('#content img');
 
-
 	$images.each( function(idx, el) {
 
-
 		n = idx + 1;
-
 		transform = Math.sin( n ) * Math.log( n ) * 21;
 		rotate = Math.cos( n ) * Math.log( n ) * -6 - 1;
 
@@ -296,10 +288,7 @@ $(window).load(function() {
 		$(el).css( 'transform', 'rotate('+rotate+'deg) translateX('+transform+'%)' );
 
 	});
-
-
 });
-
 
 
 var loaded = false;
@@ -309,8 +298,8 @@ function loader() {
 		$('#loader').delay(1000).fadeOut(2000);
 		$('#content').delay(4000).animate({ opacity: 1 }, 1500);
 		$('#godeep').delay(5000).fadeIn(800);
-		$wrapper.scrollTo( 8 * $(window).height(), { duration: 0 });
-		$wrapper.delay(1000).scrollTo( 0, { duration: 2800 }, initAutoSurface);
+		$body.scrollTo( 8 * window.innerHeight, { duration: 0 } );
+		$body.delay(1400).scrollTo( 0, { duration: 2500 }, initAutoSurface);
 	}
 	loaded = true;
 }
@@ -322,33 +311,18 @@ function pad(number, length) {
 
 function preloadImages() {
 	var source;
-	// tally = 180;
-
 	for (var i = 1; i <= 180; i++) {
 		source = "frames/waves"+( pad(i, 3) )+".jpg";
-
 		var $img = $('<img />', {
 			'src': source
 		});
-
-		// $img.on('load', function(){
-
-		// 	tally--;
-
-		// 	if(tally == 0) {
-		// 		callback.call();
-		// 	}
-
-		// });
-
 		images[i] = { "src": source };
 	}
-
 }
 
 
 function initAutoSurface() {
-	$wrapper.on('scroll', scrolled );
+	$window.on('scroll', scrolled );
 }
 
 
@@ -362,7 +336,7 @@ function scrolled() {
 
     if ( offsetY < maxScroll ) {
 
-			$wrapper.scrollTo( 0, { duration: Math.sqrt(offsetY) * 80 });
+			$body.scrollTo( 0, { duration: Math.sqrt(offsetY) * 80 });
 
 		}
 
