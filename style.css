@@ -106,31 +106,12 @@ img#video {
 #content img:first-child {
 	margin: 30vh auto 38vh;
 }
-@media (min-width: 768px) {
+/*@media (min-width: 768px) {
 	#content img:first-child {
 		margin: 38vh auto;
 	}
-}
-@-webkit-keyframes floating {
-	0% { -webkit-transform: translateY(0%); }
-	50% { -webkit-transform: translateY(-30%); }
-	100% { -webkit-transform: translateY(0%); }
-}
-@-moz-keyframes floating {
-	0% { -moz-transform: translateY(0%); }
-	50% { -moz-transform: translateY(-30%); }
-	100% { -moz-transform: translateY(0%); }
-}
-@-o-keyframes floating {
-	0% { -o-transform: translateY(0%); }
-	50% { -o-transform: translateY(-30%); }
-	100% { -o-transform: translateY(0%); }
-}
-@keyframes floating {
-	0% { transform: translateY(0%); }
-	50% { transform: translateY(-30%); }
-	100% { transform: translateY(0%); }
-}
+}*/
+
 .ctas {
 	position: fixed;
 	width: 100%;

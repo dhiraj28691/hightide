@@ -16,6 +16,7 @@ window.onbeforeunload = function(){
 var images;
 var $window;
 var $body;
+var $firstTee;
 var $vr;
 var offsetY;
 var maxScroll;
@@ -26,6 +27,7 @@ var offScroll;
 $window = $( window );
 $body = $( 'body' );
 images = new Array;
+$firstTee = $( '#content img:first-child' );
 
 if ( Modernizr.webgl ) {
 	$vr = $('#vr');
@@ -206,6 +208,11 @@ loop( loader );
 
 
 $(window).load(function() {
+
+
+	// first tee margin top
+
+	$firstTee.css('margin-top', ( windowHeight - $firstTee.height() ) / 2 );
 
 
 	// 'waves' bg animation
