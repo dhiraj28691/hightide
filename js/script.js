@@ -16,6 +16,7 @@ window.onbeforeunload = function(){
 var images;
 var $window;
 var $body;
+var $vr;
 var offsetY;
 var maxScroll;
 var offScroll;
@@ -25,6 +26,14 @@ var offScroll;
 $window = $( window );
 $body = $( 'body' );
 images = new Array;
+
+if ( Modernizr.webgl ) {
+	alert('WebGL!');
+	$vr = $('#vr');
+} else  {
+	$vr = $('#fake-vr');
+}
+
 
 
 $('#loader .container').fadeIn(1000);
@@ -43,12 +52,9 @@ $('#overlay').css({
 if( navigator.userAgent.match('CriOS') ) {
 
 	var defaultPrevent=function(e){e.preventDefault();}
-	// document.body.parentElement.addEventListener("touchstart", defaultPrevent);
 	document.body.parentElement.addEventListener("touchmove" , defaultPrevent);
-	// document.body.addEventListener("touchstart", defaultPrevent);
 	document.body.addEventListener("touchmove" , defaultPrevent);
 
-	alert('Chrome iOS!');
 }
 
 
@@ -313,13 +319,13 @@ function getUp() {
 	scrollTrigger = false;
 	$('#surface').fadeOut(800);
 	$('#godeep').delay(800).fadeIn(800);
-	$('#vr').animate({ opacity: 0 }, 800);
+	$vr.animate({ opacity: 0 }, 800);
 }
 
 function getDown() {
 	scrollTrigger = true;
 	$body.scrollTo( maxScroll + 2 * window.innerHeight, { duration: 800 });
-	$('#vr').animate({ opacity: 1 }, 1500);
+	$vr.animate({ opacity: 1 }, 1500);
 	$('#surface').fadeIn(800);
 	$('#godeep').fadeOut(800);
 }
