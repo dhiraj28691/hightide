@@ -28,7 +28,6 @@ $body = $( 'body' );
 images = new Array;
 
 if ( Modernizr.webgl ) {
-	alert('WebGL!');
 	$vr = $('#vr');
 } else  {
 	$vr = $('#fake-vr');
