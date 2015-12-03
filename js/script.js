@@ -186,22 +186,22 @@ var level = 0;
 
 function loop() {
 
-	if(level < 1.9) {
+	// if(level < 1.9) {
 		window.requestAnimFrame(loop, c);
 		tick++;
 		clear();
 		updatePoints();
 		renderShape();
 		level = level + .004;
-	}
+	// }
 
-	if(level >= 1) {
-		loader.call();
-	}
+	// if(level >= 1) {
+		// loader.call();
+	// }
 
 };
 
-loop( loader );
+loop();
 
 
 
@@ -209,6 +209,7 @@ loop( loader );
 
 $(window).load(function() {
 
+  loader();
 
 	// first tee margin top
 
@@ -232,7 +233,6 @@ $(window).load(function() {
 
 		changeFrame(step, images);
 
-		// requestAnimationFrame(animloop);
 	}
 
 
@@ -258,13 +258,6 @@ $(window).load(function() {
 			animloop( offsetY, step, images );
 		});
 
-
-		// requestAnimationFrame( animloop( offsetY, step, images ) );
-
-		// console.log( 'maxScroll =', maxScroll );
-		// console.log( 'offsetY =', offsetY );
-		// console.log( '$body.height() =', $body.height() );
-		// console.log( 'window.innerHeight =', window.innerHeight );
 
 		if ( offsetY < maxScroll - window.innerHeight / 4 ) {
 			 console.log('<');
@@ -364,6 +357,7 @@ function preloadImages() {
 			'src': source
 		});
 		images[i] = { "src": source };
+    $('.wrapper').append($img);
 	}
 }
 
@@ -380,7 +374,6 @@ function scrolled() {
 
 	offScroll = setTimeout( function() {
 
-		// console.log( 'scrolled' );
 
     if ( offsetY < maxScroll ) {
 
