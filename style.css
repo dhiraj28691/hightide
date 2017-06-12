@@ -60,13 +60,7 @@ canvas {
 	z-index:2
 }
 .wrapper {
-/*	position:fixed;
-	top:0;
-	right:0;
-	bottom:0;
-	left:0;*/
 	width: 100%;
-	/*height: 100%;*/
 	text-align: center;
 }
 img#video {
@@ -77,6 +71,12 @@ img#video {
 	-mos-transform: translate(-50%, -50%);
 	transform: translate(-50%, -50%);
 	min-width: 100%;
+}
+.video-assets {
+	position: fixed;
+	top: 100%;
+	height: 0;
+	overflow: hidden;
 }
 #overlay {
 	pointer-events: none;
