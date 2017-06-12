@@ -9,9 +9,12 @@ window.requestAnimFrame = (function(){
 		  };
 })();
 
+var yAmount = 8 * window.innerHeight;
+
 window.onbeforeunload = function(){
-	window.scrollTo(0,0);
+  window.scrollTo(0, yAmount);
 }
+
 
 var images;
 var $window;
@@ -25,7 +28,7 @@ var offScroll;
 
 
 $window = $( window );
-$body = $( 'body' );
+$body = $('body');
 images = new Array;
 $firstTee = $( '#content img:first-child' );
 
@@ -35,9 +38,11 @@ if ( Modernizr.webgl ) {
 	$vr = $('#fake-vr');
 }
 
+preloadImages();
 
 
 $('#loader .container').fadeIn(1000);
+
 
 var windowHeight = window.screen.availHeight;
 
@@ -59,11 +64,10 @@ if( navigator.userAgent.match('CriOS') ) {
 }
 
 
-preloadImages();
 
 
 
-// loader
+// loader animation
 
 var c = document.getElementById('c'),
     ctx = c.getContext('2d'),
@@ -175,46 +179,45 @@ var renderShape = function(){
   ctx.fill();
 };
 
-
 var clear = function(){
   ctx.clearRect(0, 0, cw, ch);
 };
 
 
+
+// loader animation init
+
 var level = 0;
 
+var reference;
 
 function loop() {
 
-	// if(level < 1.9) {
-		window.requestAnimFrame(loop, c);
+    reference = requestAnimFrame(loop);
+
+    console.log('reference');
+
 		tick++;
 		clear();
 		updatePoints();
 		renderShape();
 		level = level + .004;
-	// }
-
-	// if(level >= 1) {
-		// loader.call();
-	// }
-
 };
+
 
 loop();
 
 
 
 
+$(window).on('load', fadeInContent);
 
 $(window).load(function() {
 
-  loader();
 
 	// first tee margin top
 
-	$firstTee.css('margin-top', ( windowHeight - $firstTee.height() ) / 2 );
-
+	$firstTee.css('margin-top', ( window.innerHeight - $firstTee.height() ) / 2 );
 
 	// 'waves' bg animation
 
@@ -259,15 +262,15 @@ $(window).load(function() {
 		});
 
 
+    //  end of 'waves' bg animation
+
 		if ( offsetY < maxScroll - window.innerHeight / 4 ) {
-			 console.log('<');
 			if( scrollTrigger == true ){
 				getUp();
 			}
 		}
 
 		if ( offsetY >= maxScroll + window.innerHeight / 4 ) {
-				console.log('>=');
 			if( scrollTrigger == false ){
 				getDown();
 			}
@@ -288,6 +291,8 @@ $(window).load(function() {
 		event.preventDefault();
 		$body.scrollTo( 0, { duration: 4000 });
 	});
+
+
 
 
 	// tees transform animation
@@ -312,6 +317,9 @@ $(window).load(function() {
 	});
 });
 
+
+
+
 var scrollTrigger = false;
 
 function getUp() {
@@ -329,19 +337,16 @@ function getDown() {
 	$('#godeep').fadeOut(800);
 }
 
-
-var loaded = false;
-
-
-function loader() {
-	if( loaded == false ){
+function fadeInContent() {
 		$('#loader').delay(1000).fadeOut(2000);
 		$('#content').delay(4000).animate({ opacity: 1 }, 1200);
-		$('#godeep').delay(5200).fadeIn(800);
-		$body.scrollTo( 8 * window.innerHeight, { duration: 0 } );
+		$('#godeep').delay(5200).fadeIn(2800);
+    window.scrollTo(0, yAmount);
 		$body.delay(1400).scrollTo( 0, { duration: 2500 }, initAutoSurface);
-	}
-	loaded = true;
+
+    console.log('fadeInContent');
+
+    setTimeout( function(){ cancelAnimationFrame(reference) }, 3000 );
 }
 
 function pad(number, length) {
@@ -357,7 +362,8 @@ function preloadImages() {
 			'src': source
 		});
 		images[i] = { "src": source };
-    $('.wrapper').append($img);
+
+    $('.video-assets').append($img);
 	}
 }
 
@@ -381,7 +387,7 @@ function scrolled() {
 
 		}
 
-	}, 800 );
+	}, 1200 );
 }
 
 
